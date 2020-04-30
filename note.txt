@@ -1,0 +1,4 @@
+I think horizontal and vertical are backwards
+Also going through obstacles
+Look into setting values over again
+Not sure f is actually working, getting some non-ideal nodes

@@ -1,33 +1,42 @@
 import java.util.Scanner;
 
-public class search
-{
-	public static void main(String[] args)
-	{
-        newBoard board = new newBoard();
-		Scanner keyboard = new Scanner(System.in);
-    
-        // Prints the board prior to obstacles
+class test {
+
+    public static void main(String[] args) {
+        /* Names are done row by column */
+        Board board = new Board();
+        Scanner keyboard = new Scanner(System.in);
+
         board.createObstacle();
         board.printBoard();
-
-        System.out.println("Enter Start Point Horizontally, between [0, 7]");
-        int startH = keyboard.nextInt();
-        System.out.println("Enter Start Point Vertically, between [0, 7]");
-        int startV = keyboard.nextInt();
-        System.out.println("Enter End Point Horizontally, between [0, 7]");
-        int endH = keyboard.nextInt();
-        System.out.println("Enter Start Point Horizontally, between [0, 7]");
-        int endV = keyboard.nextInt();
-
-        board.addStartEnd(startH, startV, endH, endV);
-        board.printBoard();
         
+        boolean done;
+        int startRow;
+        int startColumn;
+        int endRow;
+        int endColumn;
+
+        do { 
+            System.out.println("Enter the row you would like to start on, between 1 and 8");
+            startRow = keyboard.nextInt() - 1;
+            System.out.println("Enter the column you would like to start on, between 1 and 8");
+            startColumn = keyboard.nextInt() - 1;
+            
+            System.out.println("Enter the row you would like to end on, between 1 and 8");
+            endRow = keyboard.nextInt() - 1;
+            System.out.println("Enter the column you would like to end on, between 1 and 8");
+            endColumn = keyboard.nextInt() - 1;
+
+            done = (startRow >= 0) && (startRow < 8) && (startColumn >= 0) && (startColumn < 8)
+                && (endRow >= 0) && (endRow < 8) && (endColumn >= 0) && (endColumn < 8);
+        }while(!done);
         keyboard.close();
-        
-        System.out.println();
 
-        board.search(startH, startV, endH, endV);
+        board.addStartEnd(startColumn, startRow, endColumn, endRow);
+        board.search(startColumn, startRow, endColumn, endRow);
+
+        System.out.println();
         board.printBoard();
-	}
+
+    }
 }

@@ -335,8 +335,9 @@ public class Board {
     public void printParents(newNode node) {
     
         while(node != null) {
-            node.setPath();
-            System.out.println(node.getName());
+            if(node.getStatus() == Status.NORMAL)
+                node.setPath();
+            //System.out.println(node.getName());
             node = node.getParent();
         }
 

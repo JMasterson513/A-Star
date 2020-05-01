@@ -6,7 +6,7 @@
 
 import java.util.Scanner;
 
-class search {
+class is19308132 {
 
     public static void main(String[] args) {
         /* Names are done row by column */

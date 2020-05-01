@@ -1,3 +1,10 @@
+/* newNode.java
+ * Node element for the board
+ *
+ * Lena Stolz - 17210577
+ * Joseph Masterson - 19308132
+ */
+
 
 public class newNode {
 
@@ -11,7 +18,6 @@ public class newNode {
 	Status status; // is this node the start, end or an obstacle
 	
 	// Constructor to set the coordinates and set it to a normal node
-    //TODO Just switched the order of row and column 
 	public newNode(int aRow, int aColumn, String name) {
 		this.setColumn(aColumn);
 		this.setRow(aRow);

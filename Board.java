@@ -1,19 +1,28 @@
+/* Board.java 
+ * Creates the board, obstacles and performs the search
+ *
+ * Lena Stolz - 17210577
+ * Joseph Masterson - 19308132
+ */
+
+
 import java.util.Random;
 import java.lang.Math;
 import java.util.LinkedList;
 
 public class Board {
 
-	static final int BOARD_SIZE = 8;
+	static final int BOARD_SIZE = 8; // Macimum size for the board
 	static final int MAX_RAND = 3; // Maximum int for shape and block
 	
-    private LinkedList<newNode> open;
-    private LinkedList<newNode> closed;
+    private LinkedList<newNode> open; // open list for A*
+    private LinkedList<newNode> closed; // closed list for A*
 
 	private newNode[][] board; // row by column
 	
 	Random rand = new Random();
 	
+    // Default Constructor, initializies all nodes as normal
 	public Board() {
 		board = new newNode[BOARD_SIZE][BOARD_SIZE];
 		
@@ -23,6 +32,7 @@ public class Board {
     }
 
 
+    // Method to print the names of each node
     public void printNames() {
         for(int row = 0; row < BOARD_SIZE; row++) {
 			for(int column = 0; column < BOARD_SIZE; column++)
@@ -205,10 +215,37 @@ public class Board {
 	}
 
 	/* Method to add the start and end points
+     * Validates all input
+     * Returns false is input is bad
+     * Returns true if input is good
 	*/
-    public void addStartEnd(int startColumn, int startRow, int endColumn, int endRow) {
+    public boolean addStartEnd(int startColumn, int startRow, int endColumn, int endRow) {
+        
+        // Check to make sure the inputs are in the bounds
+        if(startColumn < 0 || startColumn >= 8 ||
+                startRow < 0 || startRow >= 8 ||
+                endColumn < 0 || endColumn >= 8 ||
+                endRow < 0 || endRow >= 8) {
+            System.out.println("The values are out of bounds\n");
+            return false;
+        }
+
+        // Check to see if start block is in the same place as an obstacle
+        if(board[startRow][startColumn].getStatus() == Status.OBSTACLE) {
+            System.out.println("Start Block is an Obstacle\n");
+            return false;
+        }
+
+        // Check to see if end block is in the same palce as an obstacle
+        if(board[endRow][endColumn].getStatus() == Status.OBSTACLE) {
+            System.out.println("End Block is an Obstacle\n");
+            return false;
+        }
+
+        // Sets the start and end blocks
         board[startRow][startColumn].setStart();
 		board[endRow][endColumn].setEnd();
+        return true;
     }
 
 	/* Method to search through the grid
@@ -270,6 +307,9 @@ public class Board {
         return;
 	}
 
+    /* Method to find the minimum F-value
+     * Loops thorugh all members of the given list
+     */
 	public newNode findMin(LinkedList<newNode> list) {
 		newNode ret = list.getFirst();
 
@@ -280,6 +320,9 @@ public class Board {
 	} 
 
 
+    /* Method to estimate all of the values for a list
+     * Estimates G, H, and F 
+     */
 	public void estimateValues(LinkedList<newNode> list, int endColumn, int endRow) {
 		for(int i = 0; i < list.size(); i++) {
 			newNode node = list.get(i);
@@ -289,23 +332,35 @@ public class Board {
 		}
 	}
 
+    /* Method to calculate the G value for a node
+     * Adds one to the parents value
+     */
 	public void calculateG(newNode node) {
 		int parentG = node.getParent().getgValue();
 		node.setgValue(parentG + 1);
 	}
 
+    /* Method to estimate the Heuristic - Manhattan distance
+     * Absolute value of (x1-x2) + (y1-y2)
+     */
 	public void estimateH(newNode node, int endColumn, int endRow) {
 		int rowTerm = Math.abs(node.getRow() - endRow);
 		int columnTerm = Math.abs(node.getColumn() - endColumn);
 		node.sethValue(rowTerm + columnTerm);
 	}
 
+    /* Method to estimate the F-value of a node
+     * Adds the G and H values together
+     */
 	public void estimateF(newNode node) {
 		int gValue = node.getgValue();
 		int hValue = node.gethValue();
 		node.setfValue(gValue + hValue);
 	}
 
+    /* Method to get all of the adjacent nodes
+     * Loops from 1 behind to 1 forward in both directions
+     */
 	public LinkedList<newNode> getAdjacent(newNode node) {
 		LinkedList<newNode> ret = new LinkedList<newNode>();
 		int rowIndex = node.getRow();
@@ -332,6 +387,10 @@ public class Board {
         return ret;
 	}
 
+    /* Method to set the path
+     * Goes from the given node until finding the start node
+     * Uses the parent to go backwards
+     */
     public void printParents(newNode node) {
     
         while(node != null) {

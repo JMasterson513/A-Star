@@ -1,7 +1,7 @@
 /* Enum Status for each Node
  *
- * Lena Stolz - 17210577
- * Joseph Masterson - 19308132
+ * @authors
+ * Joseph Masterson
  */
 
 public enum Status {

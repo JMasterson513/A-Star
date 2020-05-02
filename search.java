@@ -1,7 +1,7 @@
 /* Main Method
  *
- * Lena STolz - 17210577
- * Joseph Masterson - 19308132
+ * @author
+ * Joseph Masterson
  */
 
 import java.util.Scanner;

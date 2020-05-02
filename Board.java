@@ -1,8 +1,8 @@
 /* Board.java 
  * Creates the board, obstacles and performs the search
  *
- * Lena Stolz - 17210577
- * Joseph Masterson - 19308132
+ * @author
+ * Joseph Masterson
  */
 
 

@@ -1,8 +1,8 @@
 /* newNode.java
  * Node element for the board
  *
- * Lena Stolz - 17210577
- * Joseph Masterson - 19308132
+ * @authors
+ * Joseph Masterson
  */
 
 
